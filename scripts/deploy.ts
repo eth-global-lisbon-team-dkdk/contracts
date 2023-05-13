@@ -1,26 +1,15 @@
-// We require the Hardhat Runtime Environment explicitly here. This is optional
-// but useful for running the script in a standalone fashion through `node <script>`.
-// When running the script with `hardhat run <script>` you'll find the Hardhat
-// Runtime Environment's members available in the global scope.
-import { ethers } from 'hardhat';
-import { Contract, ContractFactory } from 'ethers';
+import { Contract, ContractFactory } from "ethers";
+import { ethers } from "hardhat";
 
 async function main(): Promise<void> {
-  // Hardhat always runs the compile task when running scripts through it.
-  // If this runs in a standalone fashion you may want to call compile manually
-  // to make sure everything is compiled
-  // await run("compile");
-  // We get the contract to deploy
-  const TestTokenFactory: ContractFactory = await ethers.getContractFactory(
-    'TestToken',
-  );
-  const testToken: Contract = await TestTokenFactory.deploy();
-  await testToken.deployed();
-  console.log('TestToken deployed to: ', testToken.address);
+  const uniswapRouterMumbai = "0xb71c52BA5E0690A7cE3A0214391F4c03F5cbFB0d";
+
+  const SwapperFactory: ContractFactory = await ethers.getContractFactory("Swapper");
+  const swapper: Contract = await SwapperFactory.deploy(uniswapRouterMumbai);
+  await swapper.deployed();
+  console.log("Swapper deployed to: ", swapper.address);
 }
 
-// We recommend this pattern to be able to use async/await everywhere
-// and properly handle errors.
 main()
   .then(() => process.exit(0))
   .catch((error: Error) => {
